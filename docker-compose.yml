@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  app1:
+    build:
+      context: ./
+      dockerfile: ./infra/Dockerfile
+    image: dc/sb-hw1
+    ports:
+     - "8092:8092"
+    container_name: sb-hw1
