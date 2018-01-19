@@ -1,0 +1,31 @@
+pipeline{
+    agent{
+        node{
+            label 'master'
+        }
+    }
+    stages{
+        stage("Build"){
+            sh "gradle clean build"
+
+        }
+        stage("deploy"){
+            sh "docker-compose up -d"
+
+        }
+        stage("Test and Clean up"){
+            input "Exploratory tests. Everything looks ok?"
+        }
+        post{
+            always{
+                sh "docker-compose down --rmi all"
+            }
+        }
+    }
+    post{
+        always{
+            deleteDir()
+        }
+    }
+
+}
